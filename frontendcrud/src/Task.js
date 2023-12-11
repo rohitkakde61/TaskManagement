@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
-function Student() {
-    const [student, setStudent] = useState([])
+function Task() {
+    const [task, setTask] = useState([])
     useEffect(() => {
         axios.get('http://localhost:8081/')
-            .then(res => setStudent(res.data))
+            .then(res => setTask(res.data))
             .catch(err => console.log(err));
     }, []);
     const handleDelete = async (id) => {
         try {
-            await axios.delete('http://localhost:8081/student/' + id)
+            await axios.delete('http://localhost:8081/task/' + id)
             window.location.reload()
         } catch (err) {
             console.log(err);
@@ -25,20 +25,20 @@ function Student() {
                 <table className='table'>
                     <thead>
                         <tr>
-                            <th>Name Task</th>
-                            <th>Desc</th>
+                            <th>Name</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            student.map((data, i) => (
+                            task.map((data, i) => (
                                 <tr key={i}>
-                                    <td>{data.Name}</td>
-                                    <td>{data.Email}</td>
+                                    <td>{data.name}</td>
+                                    <td>{data.description}</td>
                                     <td>
-                                        <Link to={`update/${data.ID}`} classname='btn btn-primary'>Update</Link>
-                                        <button className='btn btn-danger ms-2' onClick={e => handleDelete(data.ID)}>Delete</button>
+                                        <Link to={`update/${data.id}`} classname='btn btn-primary'>Update</Link>
+                                        <button className='btn btn-danger ms-2' onClick={e => handleDelete(data.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))
@@ -51,4 +51,4 @@ function Student() {
     );
 }
 
-export default Student;
+export default Task;

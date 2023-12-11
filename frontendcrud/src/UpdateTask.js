@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function UpdateStudent() {
+function UpdateTask() {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
     const { id } = useParams();  // Corrected to lowercase "id"
     const navigate = useNavigate();
 
@@ -13,16 +13,16 @@ function UpdateStudent() {
         // and update the state (name and email) accordingly
         axios.get(`http://localhost:8081/${id}`)
             .then(res => {
-                const student = res.data; // Assuming your API returns student data
-                setName(student.name);
-                setEmail(student.email);
+                const task = res.data; // Assuming your API returns student data
+                setName(task.name);
+                setDescription(task.description);
             })
             .catch(err => console.log(err));
     }, [id]);
 
     function handleSubmit(event) {
         event.preventDefault();
-        axios.put(`http://localhost:8081/update/${id}`, { name, email })
+        axios.put(`http://localhost:8081/update/${id}`, { name, description })
             .then(res => {
                 console.log(res);
                 navigate('/');
@@ -34,9 +34,9 @@ function UpdateStudent() {
         <div className='d-flex vh-100 bg-primary justify-content-centre align-items-center'>
             <div className='w-50 bg-white rounded p-3'>
                 <form onSubmit={handleSubmit}>
-                    <h2>Update Student</h2>
+                    <h2>Update Task</h2>
                     <div className='mb-2'>
-                        <label htmlFor="name">Name Task</label>
+                        <label htmlFor="name">Name</label>
                         <input
                             type="text"
                             id="name"
@@ -47,14 +47,14 @@ function UpdateStudent() {
                         />
                     </div>
                     <div className='mb-2'>
-                        <label htmlFor="email">Desc</label>
+                        <label htmlFor="description">Desc</label>
                         <input
-                            type="email"
-                            id="email"
-                            placeholder='Enter Email'
+                            type="text"
+                            id="desc"
+                            placeholder='Enter Description'
                             className='form-control'
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
                         />
                     </div>
                     <button className='btn btn-success'>Update</button>
@@ -64,4 +64,4 @@ function UpdateStudent() {
     );
 }
 
-export default UpdateStudent;
+export default UpdateTask;

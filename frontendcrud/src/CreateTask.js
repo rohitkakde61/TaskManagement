@@ -2,14 +2,14 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CreateStudent() {
+function CreateTask() {
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
     const navigate = useNavigate();
 
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post('http://localhost:8081/create', { name, email })
+        axios.post('http://localhost:8081/create', { name, description })
             .then(res => {
                 console.log(res);
                 navigate('/');
@@ -23,7 +23,7 @@ function CreateStudent() {
                 <form onSubmit={handleSubmit}>
                     <h2>Add Task</h2>
                     <div className='mb-2'>
-                        <label htmlFor="name">Name Task</label>
+                        <label htmlFor="name">Name </label>
                         <input
                             type="text"
                             id="name"
@@ -33,13 +33,13 @@ function CreateStudent() {
                         />
                     </div>
                     <div className='mb-2'>
-                        <label htmlFor="email">Desc</label>
+                        <label htmlFor="description">Description</label>
                         <input
                             type="text"
                             id="desc"
-                            placeholder='Enter Desc'
+                            placeholder='Enter Description'
                             className='form-control'
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={e => setDescription(e.target.value)}
                         />
                     </div>
                     <button className='btn btn-success'>Submit</button>
@@ -49,4 +49,4 @@ function CreateStudent() {
     );
 }
 
-export default CreateStudent;
+export default CreateTask;

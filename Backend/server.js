@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 app.get("/", (req, res) => {
-    const sql = "SELECT * FROM STUDENT";
+    const sql = "SELECT * FROM task";
     db.query(sql, (err, data) => {
         if (err) return res.json("Error");
         return res.json(data);
@@ -22,10 +22,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/create", (req, res) => {
-    const sql = "INSERT INTO STUDENT (Name, Email) VALUES (?, ?)";
+    const sql = "INSERT INTO task (name, description) VALUES (?, ?)";
     const values = [
         req.body.name,
-        req.body.email
+        req.body.description
     ];
 
     db.query(sql, values, (err, data) => {
@@ -35,8 +35,8 @@ app.post("/create", (req, res) => {
 });
 
 app.put("/update/:id", (req, res) => {
-    const sql = "UPDATE student SET `Name`=?, `Email`=? WHERE ID=?";
-    const values = [req.body.name, req.body.email];
+    const sql = "UPDATE task SET `name`=?, `description`=? WHERE id=?";
+    const values = [req.body.name, req.body.description];
     const id = req.params.id;
 
     db.query(sql, [...values, id], (err, data) => {
@@ -46,8 +46,8 @@ app.put("/update/:id", (req, res) => {
 });
 
 
-app.delete('/student/:id', (req, res) => {
-    const sql = "DELETE FROM student Where ID=?"
+app.delete('/task/:id', (req, res) => {
+    const sql = "DELETE FROM task Where id=?"
 
     const id = req.params.id;
 
